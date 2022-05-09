@@ -29,7 +29,7 @@ function App() {
     fetchImages()
   }, [])
 
-  return <h2>stock photos starter</h2>
+  return <h2>stock photos app</h2>
 }
 
 export default App
