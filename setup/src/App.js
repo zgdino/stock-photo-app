@@ -51,6 +51,7 @@ function App() {
             return <Photo key={index} {...image} />
           })}
         </div>
+        {/* loading on the bottom of the page because of the infinite scroll */}
         {loading && <h2 className='loading'>Loading...</h2>}
       </section>
     </main>
