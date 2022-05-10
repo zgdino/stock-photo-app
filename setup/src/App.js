@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { FaSearch } from 'react-icons/fa'
+import { FaBroadcastTower, FaSearch } from 'react-icons/fa'
 import Photo from './Photo'
 // const clientID = `?client_id=${process.env.REACT_APP_ACCESS_KEY}`
 
@@ -34,12 +34,15 @@ function App() {
     // setting up scroll event listener
     const event = window.addEventListener('scroll', () => {
       if (
+        // don't do it if already loading
         !loading &&
+        // 2px before reaching the bottom of the page 
         window.innerHeight + window.scrollY >= document.body.scrollHeight - 2
       ) {
         console.log('fetch the data')
       }
     })
+    // making sure to remove the event listener by the end
     return () => window.removeEventListener('scroll', event)
   }, [])
 
