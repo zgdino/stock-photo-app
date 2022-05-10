@@ -30,6 +30,16 @@ function App() {
     fetchImages()
   }, [])
 
+  useEffect(() => {
+    // setting up scroll event listener
+    const event = window.addEventListener('scroll', () => {
+      console.log(`inner height ${window.innerHeight}`);
+      console.log(`scrollY ${window.scrollY}`);
+      console.log(`bodyHeight ${document.body.scrollHeight}`);
+    })
+    return () => window.removeEventListener('scroll', event)
+  }, [])
+
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log('hello')
