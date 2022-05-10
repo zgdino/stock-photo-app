@@ -33,9 +33,12 @@ function App() {
   useEffect(() => {
     // setting up scroll event listener
     const event = window.addEventListener('scroll', () => {
-      console.log(`inner height ${window.innerHeight}`);
-      console.log(`scrollY ${window.scrollY}`);
-      console.log(`bodyHeight ${document.body.scrollHeight}`);
+      if (
+        !loading &&
+        window.innerHeight + window.scrollY >= document.body.scrollHeight - 2
+      ) {
+        console.log('fetch the data')
+      }
     })
     return () => window.removeEventListener('scroll', event)
   }, [])
