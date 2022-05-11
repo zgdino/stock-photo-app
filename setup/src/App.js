@@ -1,24 +1,30 @@
 import React, { useState, useEffect } from 'react'
-import { FaBroadcastTower, FaSearch } from 'react-icons/fa'
+import { FaBroadcastTower, FaImages, FaSearch } from 'react-icons/fa'
 import Photo from './Photo'
 // const clientID = `?client_id=${process.env.REACT_APP_ACCESS_KEY}`
 
 const clientID = `?client_id=${process.env.REACT_APP_ACCESS_KEY}`
 
+// documentation - limits the number of queries
 const mainUrl = `https://api.unsplash.com/photos/`
 const searchUrl = `https://api.unsplash.com/search/photos/`
 
 function App() {
   const [loading, setLoading] = useState(false)
   const [photos, setPhotos] = useState([])
+  const [page, setPage] = useState(1)
   const fetchImages = async () => {
     setLoading(true)
     let url
-    url = `${mainUrl}${clientID}&page=3`
+    const urlPage = `&page=${page}`
+    url = `${mainUrl}${clientID}${urlPage}`
     try {
       const response = await fetch(url)
       const data = await response.json()
-      setPhotos(data)
+      setPhotos((oldPhotos) => {
+        // to already fetched images, add new ones from data
+        return [...oldPhotos, ...data]
+      })
       setLoading(false)
     } catch (error) {
       setLoading(false)
@@ -28,7 +34,7 @@ function App() {
 
   useEffect(() => {
     fetchImages()
-  }, [])
+  }, [page])
 
   useEffect(() => {
     // setting up scroll event listener
@@ -36,10 +42,12 @@ function App() {
       if (
         // don't do it if already loading
         !loading &&
-        // 2px before reaching the bottom of the page 
+        // 2px before reaching the bottom of the page
         window.innerHeight + window.scrollY >= document.body.scrollHeight - 2
       ) {
-        console.log('fetch the data')
+        setPage((oldPage) => {
+          return oldPage + 1
+        })
       }
     })
     // making sure to remove the event listener by the end
