@@ -14,7 +14,6 @@ function App() {
   const [page, setPage] = useState(1)
   const [query, setQuery] = useState('')
 
-
   const fetchImages = async () => {
     setLoading(true)
     let url
@@ -23,17 +22,23 @@ function App() {
 
     if (query) {
       url = `${searchUrl}${clientID}${urlPage}${urlQuery}`
-    }
-    else {
+    } else {
       url = `${mainUrl}${clientID}${urlPage}`
     }
 
     try {
       const response = await fetch(url)
       const data = await response.json()
+      console.log(data)
       setPhotos((oldPhotos) => {
+        if (query) {
+          // what we need is in the object under .results
+          return [...oldPhotos, ...data.results]
+        }
         // to already fetched images, add new ones from data
-        return [...oldPhotos, ...data]
+        else {
+          return [...oldPhotos, ...data]
+        }
       })
       setLoading(false)
     } catch (error) {
@@ -68,14 +73,20 @@ function App() {
   // setting functionality for submit button
   const handleSubmit = (e) => {
     e.preventDefault()
-    console.log('hello')
+    fetchImages()
   }
 
   return (
     <main>
       <section className='search'>
         <form className='search-form'>
-          <input type='text' placeholder='search' className='form-input' value={query} onChange={(e) => setQuery(e.target.value)} />
+          <input
+            type='text'
+            placeholder='search'
+            className='form-input'
+            value={query}
+            onChange={(e) => setQuery(e.target.value)}
+          />
           <button className='submit-btn' type='submit' onClick={handleSubmit}>
             <FaSearch />
           </button>
