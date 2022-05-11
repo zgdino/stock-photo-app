@@ -1,11 +1,10 @@
 import React, { useState, useEffect } from 'react'
 import { FaBroadcastTower, FaImages, FaSearch } from 'react-icons/fa'
 import Photo from './Photo'
-// const clientID = `?client_id=${process.env.REACT_APP_ACCESS_KEY}`
 
 const clientID = `?client_id=${process.env.REACT_APP_ACCESS_KEY}`
 
-// documentation - limits the number of queries
+// documentation - API limits the number of queries
 const mainUrl = `https://api.unsplash.com/photos/`
 const searchUrl = `https://api.unsplash.com/search/photos/`
 
@@ -46,6 +45,7 @@ function App() {
         window.innerHeight + window.scrollY >= document.body.scrollHeight - 2
       ) {
         setPage((oldPage) => {
+          // load next set of images
           return oldPage + 1
         })
       }
@@ -54,6 +54,7 @@ function App() {
     return () => window.removeEventListener('scroll', event)
   }, [])
 
+  // setting functionality for submit button
   const handleSubmit = (e) => {
     e.preventDefault()
     console.log('hello')
@@ -72,6 +73,7 @@ function App() {
       <section className='photos'>
         <div className='photos-center'>
           {photos.map((image, index) => {
+            // for each of the photos return a Photo component
             return <Photo key={image.id} {...image} />
           })}
         </div>
