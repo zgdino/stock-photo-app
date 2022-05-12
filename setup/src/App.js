@@ -76,8 +76,9 @@ function App() {
 
   // setting functionality for submit button
   const handleSubmit = (e) => {
+    // prevent default behaviour
     e.preventDefault()
-    // for every new query set page to 1
+    // for every new query set page to 1; initial value of the page is 0
     setPage(1)
   }
 
