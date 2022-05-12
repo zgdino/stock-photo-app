@@ -31,7 +31,11 @@ function App() {
       const data = await response.json()
       console.log(data)
       setPhotos((oldPhotos) => {
-        if (query) {
+        // if we have a new query and are on the page 1 return results only
+        if (query && page === 1) {
+          return data.results
+          // query is still true but not on the page 1
+        } else if (query) {
           // what we need is in the object under .results
           return [...oldPhotos, ...data.results]
         }
