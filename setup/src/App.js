@@ -53,6 +53,7 @@ function App() {
 
   useEffect(() => {
     fetchImages()
+    // eslint-disable-next-line
   }, [page])
 
   useEffect(() => {
@@ -69,6 +70,7 @@ function App() {
           return oldPage + 1
         })
       }
+      // eslint-disable-next-line
     })
     // making sure to remove the event listener by the end
     return () => window.removeEventListener('scroll', event)
