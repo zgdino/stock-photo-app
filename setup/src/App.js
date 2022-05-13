@@ -70,10 +70,10 @@ function App() {
           return oldPage + 1
         })
       }
-      // eslint-disable-next-line
     })
     // making sure to remove the event listener by the end
     return () => window.removeEventListener('scroll', event)
+    // eslint-disable-next-line
   }, [])
 
   // setting functionality for submit button
