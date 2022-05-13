@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { FaBroadcastTower, FaImages, FaSearch } from 'react-icons/fa'
 import Photo from './Photo'
 
@@ -11,8 +11,9 @@ const searchUrl = `https://api.unsplash.com/search/photos/`
 function App() {
   const [loading, setLoading] = useState(false)
   const [photos, setPhotos] = useState([])
-  const [page, setPage] = useState(0)
+  const [page, setPage] = useState(1)
   const [query, setQuery] = useState('')
+  const mounted = useRef(false)
 
   const fetchImages = async () => {
     setLoading(true)
@@ -57,30 +58,23 @@ function App() {
   }, [page])
 
   useEffect(() => {
-    // setting up scroll event listener
-    const event = window.addEventListener('scroll', () => {
-      if (
-        // don't do it if already loading
-        !loading &&
-        // 2px before reaching the bottom of the page
-        window.innerHeight + window.scrollY >= document.body.scrollHeight - 2
-      ) {
-        setPage((oldPage) => {
-          // load next set of images
-          return oldPage + 1
-        })
-      }
-    })
-    // making sure to remove the event listener by the end
-    return () => window.removeEventListener('scroll', event)
-    // eslint-disable-next-line
+    if (!mounted.current) {
+      mounted.current = true
+      return
+    }
+    console.log('second')
   }, [])
 
   // setting functionality for submit button
   const handleSubmit = (e) => {
     // prevent default behaviour
     e.preventDefault()
-    // for every new query set page to 1; initial value of the page is 0
+    // if no query, do not fetch images
+    if (!query) return
+    if (page === 1) {
+      fetchImages()
+      return
+    }
     setPage(1)
   }
 
