@@ -67,7 +67,8 @@ function App() {
     if (!newImages) return
     if (loading) return
     setPage((oldPage) => oldPage + 1)
-    // every time newImages changes, trigger this useEffect
+    // every time newImages changes, trigger this useEffect which will trigger
+    // first useEffect which will trigger fetchImages()
   }, [newImages])
 
   const event = () => {
