@@ -1,6 +1,7 @@
 import React from 'react'
 
 const Photo = ({
+  // destructuring
   urls: { regular },
   alt_description,
   likes,
