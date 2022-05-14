@@ -4,7 +4,7 @@ import Photo from './Photo'
 
 const clientID = `?client_id=${process.env.REACT_APP_ACCESS_KEY}`
 
-// documentation - API limits the number of queries
+// documentation - API limits the number of queries to 50/hr
 const mainUrl = `https://api.unsplash.com/photos/`
 const searchUrl = `https://api.unsplash.com/search/photos/`
 
@@ -47,8 +47,10 @@ function App() {
         }
       })
       setNewImages(false)
+      // not loading anymore
       setLoading(false)
     } catch (error) {
+      // in case of an error set them both to false as well  
       setNewImages(false)
       setLoading(false)
     }
@@ -81,6 +83,7 @@ function App() {
 
   useEffect(() => {
     window.addEventListener('scroll', event)
+    // remove event listener until new bottom of the page
     return () => window.removeEventListener('scroll', event)
   }, [])
 
